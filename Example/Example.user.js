@@ -26,4 +26,3 @@ function example(){
    alert("Hello world");
    GM_registerMenuCommand("Hello, world! (example)", example, "e", "shift alt", "w");
 //};
-
