@@ -21,19 +21,25 @@ function example(){
    else if (document.selection) {
       txt = document.selection.createRange().text;
    }
-   alert(txt);
+   // Selection is an object and needs to be transformed into String before
+   // regexp transformations...
    var txt2=txt.toString();
    txt=txt2.replace(/""/g,"\"");
-   alert(txt);
+
    var z=parseXml(txt);
-   var datastr=z.getElementsByTagName("SSID");
    var aa=z.getElementsByTagName("SSIDConfig")[0];
-   var aaa=aa.childNodes.item("SSID");
-   var aaa=aa.childNodes.item("SSID").childNodes("hex");
-   alert(aa.childNodes("SSID").childNodes("hex").textContent);
-   return;
+   var datastring="WIFI:"
+   +"S:"+z.getElementsByTagName("SSIDConfig")[0].getElementsByTagName("name")[0].textContent+";"
+   +"P:"+z.getElementsByTagName("security")[0].getElementsByTagName("keyMaterial")[0].textContent+";"
+   +"T:"+z.getElementsByTagName("security")[0].getElementsByTagName("authentication")[0].textContent+";"
+   +";";
+
+   // Datastring is generated here
+   alert(datastring);
+
+   // use external QR service to get an image
    mainDoc = top.document.body;
-   image = "<div  id='imager' style='position:absolute;top:0px;left:0px;z-index:1000;border:black solid 10px;'><a href='#' onclick='javascript:imager=document.getElementById(\"imager\");imager.innerHTML=\"\"; ' ><div  style='border:white solid 10px;'><img src='http://qrcode.kaywa.com/img.php?s=8&d=" +   txt + "' alt='qrcode' id='qrcodethingy' style='border:black solid 0px;'/></div></a></div>";
+   image = "<div  id='imager' style='position:absolute;top:0px;left:0px;z-index:1000;border:black solid 10px;'><a href='#' onclick='javascript:imager=document.getElementById(\"imager\");imager.innerHTML=\"\"; ' ><div  style='border:white solid 10px;'><img src='http://qrcode.kaywa.com/img.php?s=8&d=" +   datastring + "' alt='qrcode' id='qrcodethingy' style='border:black solid 0px;'/></div></a></div>";
 	
    mainDoc.innerHTML = image + mainDoc.innerHTML;
    imagediv = document.getElementById("imager");
@@ -50,10 +56,7 @@ function example(){
    	alert("Did not find xml parser");
    };
 
-   GM_registerMenuCommand("Hello, world! (example)", example, "e" );
+   GM_registerMenuCommand("Convert wifi xml string to qr code", example, "e" );
    // uncoment for debugging 
-   alert("All systems loaded");
-   var txt="abrak\"\"i123\"\"adabra";
-   txt=txt.replace(/""/g,"\"");
-   alert("and"+txt);
+//   alert("All systems loaded");
 //};
