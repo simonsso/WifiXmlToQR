@@ -22,7 +22,8 @@ function example(){
       txt = document.selection.createRange().text;
    }
    alert(txt);
-   //TODO edit the xpression something like this txt.replace(/""/g,'"');
+   var txt2=txt.toString();
+   txt=txt2.replace(/""/g,"\"");
    alert(txt);
    var z=parseXml(txt);
    var datastr=z.getElementsByTagName("SSID");
@@ -52,5 +53,7 @@ function example(){
    GM_registerMenuCommand("Hello, world! (example)", example, "e" );
    // uncoment for debugging 
    alert("All systems loaded");
-
+   var txt="abrak\"\"i123\"\"adabra";
+   txt=txt.replace(/""/g,"\"");
+   alert("and"+txt);
 //};
