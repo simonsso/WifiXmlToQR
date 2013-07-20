@@ -1,17 +1,13 @@
 //(function () {
 // ==UserScript==
-// @name        Example
-// @description example
-// @include http://www.murloc.org/alts.html
-// @include http://www.murloc.org/
+// @name        WifiXmlToQR
+// @description WifiXmlToQR
 // @include https://lastpass.com/export.php?&hp=0
 // @require qrcodejs/qrcode.js
 // @namespace     http://localhost.localdomain
 // @version     1
 // ==/UserScript==
 
-//GM_log("hello world");
-//GM_openInTab("http://www.murloc.org");
 
 function wpa_encoding_type(rawstring){
    //Network types in xml are have other name in wifi object type
@@ -33,9 +29,8 @@ function hexstring(rawstring){
 	return(buffer);
 }
 
-function example(){
+function WifiXmlToQR(){
    var txt="xxx";
-	oQRCode.clear();
    if (window.getSelection) {
       txt = window.getSelection();
    }
@@ -50,6 +45,15 @@ function example(){
    var txt2=txt.toString();
    txt=txt2.replace(/""/g,"\"");
 
+   var mytext = document.getElementById("qrdata");
+	if(mytext){
+      mytext.innerHTML="unknown selection";
+	}
+   imagediv = document.getElementById("testcode");
+	if(imagediv){
+      imagediv.style.visibility = "hidden";
+	}
+
    var z=parseXml(txt);
    var aa=z.getElementsByTagName("SSIDConfig")[0];
    var datastring="WIFI:"
@@ -61,28 +65,35 @@ function example(){
    // Datastring is generated here
    //alert(datastring);
 
-	oQRCode.makecode(datastring);
-}
-	var datastring="dummy";
    mainDoc = top.document.body;
-	
-   mainDoc.innerHTML = "<div id=outer_frame><table border=10><tr><td><div id=testcode></div></td></tr></table></div>" + mainDoc.innerHTML;
    imagediv = document.getElementById("testcode");
-	
-   if (imagediv){
-      imagediv.style.visibility = "visible";				
-   }
-
-	var oQRCode = new QRCode("testcode", {
+	if(! imagediv){
+      mainDoc.innerHTML = "<div id=outer_frame><table border=10><tr><td><div id=testcode></div></td></tr><tr><td id=qrdata></td></tr></table></div>" + mainDoc.innerHTML;
+      imagediv = document.getElementById("testcode");
+      imagediv.style.visibility = "visible";
+	   oQRCode = new QRCode("testcode", {
 	     text : datastring,
 	     width : 256,
 	     height : 256,
         correctLevel : QRCode.CorrectLevel.Q
-	})
-   myouter = document.getElementById("outer_frame");
-	myouter.style.position="fixed";
+	   })
+      myouter = document.getElementById("outer_frame");
+	   myouter.style.position="fixed";
+	   myouter.style.right=0;
+	}
+	oQRCode.clear();
+	oQRCode.makeCode(datastring);
+   imagediv.style.visibility = "visible";
+   mytext = document.getElementById("qrdata");
+	if(mytext){
+		   mytext.innerHTML=datastring;
+	}
+}
+
+
 //Main
 //
+   var oQRCode; 
    if (typeof window.DOMParser != "undefined") {
 	   parseXml = function(xmlStr) {
 		return ( new window.DOMParser() ).parseFromString(xmlStr, "text/xml");
@@ -91,8 +102,6 @@ function example(){
    	alert("Did not find xml parser");
    };
 
-   GM_registerMenuCommand("Convert wifi xml string to qr code", example, "e" );
+   GM_registerMenuCommand("Convert wifi xml string to qr code", WifiXmlToQR, "e" );
    // uncoment for debugging 
-//   alert("All systems loaded");
-
-//};
+   // alert("All systems loaded");
