@@ -4,6 +4,8 @@
 // @description example
 // @include http://www.murloc.org/alts.html
 // @include http://www.murloc.org/
+// @include https://lastpass.com/export.php?&hp=0
+// @require qrcodejs/qrcode.js
 // @namespace     http://localhost.localdomain
 // @version     1
 // ==/UserScript==
@@ -11,6 +13,13 @@
 //GM_log("hello world");
 //GM_openInTab("http://www.murloc.org");
 
+function wpa_encoding_type(rawstring){
+   //Network types in xml are have other name in wifi object type
+	if(rawstring=="WPA2PSK"){
+		return("WPA")
+	}
+	return (rawstring);
+}
 
 // string hexstring(string)
 // return hexadecimal representation of a string in a string.
@@ -44,25 +53,29 @@ function example(){
    var aa=z.getElementsByTagName("SSIDConfig")[0];
    var datastring="WIFI:"
    +"S:"+z.getElementsByTagName("SSIDConfig")[0].getElementsByTagName("name")[0].textContent+";"
-   +"P:"+hexstring(z.getElementsByTagName("security")[0].getElementsByTagName("keyMaterial")[0].textContent)+";"
-   +"T:"+z.getElementsByTagName("security")[0].getElementsByTagName("authentication")[0].textContent+";"
-   +";";
+   +"P:"+(z.getElementsByTagName("security")[0].getElementsByTagName("keyMaterial")[0].textContent)+";"
+   +"T:"+wpa_encoding_type(z.getElementsByTagName("security")[0].getElementsByTagName("authentication")[0].textContent)+";"
+   ;
 
    // Datastring is generated here
    alert(datastring);
 
-   // use external QR service to get an image
    mainDoc = top.document.body;
-   image = "<div  id='imager' style='position:absolute;top:0px;left:0px;z-index:1000;border:black solid 10px;'><a href='#' onclick='javascript:imager=document.getElementById(\"imager\");imager.innerHTML=\"\"; ' ><div  style='border:white solid 10px;'><img src='http://qrcode.kaywa.com/img.php?s=8&d=" +   datastring + "' alt='qrcode' id='qrcodethingy' style='border:black solid 0px;'/></div></a></div>";
 	
-   mainDoc.innerHTML = image + mainDoc.innerHTML;
-   imagediv = document.getElementById("imager");
+   mainDoc.innerHTML = "<div><table border=10><tr><td><div id=testcode></div></td></tr></table></div>" + mainDoc.innerHTML;
+   imagediv = document.getElementById("testcode");
 	
    if (imagediv){
       imagediv.style.visibility = "visible";				
    }
-}
 
+	var oQRCode = new QRCode("testcode", {
+	     text : datastring,
+	     width : 256,
+	     height : 256,
+        correctLevel : QRCode.CorrectLevel.Q
+	})
+}
 //Main
 //
    if (typeof window.DOMParser != "undefined") {
