@@ -10,6 +10,20 @@
 
 //GM_log("hello world");
 //GM_openInTab("http://www.murloc.org");
+
+
+// string hexstring(string)
+// return hexadecimal representation of a string in a string.
+//
+function hexstring(rawstring){
+	var buffer="";
+	var i=0;
+	for(i=0; i<rawstring.length; i++){
+		buffer=buffer+rawstring.charCodeAt(i).toString(16);
+	}
+	return(buffer);
+}
+
 function example(){
    var txt="xxx";
    if (window.getSelection) {
@@ -30,7 +44,7 @@ function example(){
    var aa=z.getElementsByTagName("SSIDConfig")[0];
    var datastring="WIFI:"
    +"S:"+z.getElementsByTagName("SSIDConfig")[0].getElementsByTagName("name")[0].textContent+";"
-   +"P:"+z.getElementsByTagName("security")[0].getElementsByTagName("keyMaterial")[0].textContent+";"
+   +"P:"+hexstring(z.getElementsByTagName("security")[0].getElementsByTagName("keyMaterial")[0].textContent)+";"
    +"T:"+z.getElementsByTagName("security")[0].getElementsByTagName("authentication")[0].textContent+";"
    +";";
 
@@ -48,6 +62,9 @@ function example(){
       imagediv.style.visibility = "visible";				
    }
 }
+
+//Main
+//
    if (typeof window.DOMParser != "undefined") {
 	   parseXml = function(xmlStr) {
 		return ( new window.DOMParser() ).parseFromString(xmlStr, "text/xml");
@@ -59,4 +76,5 @@ function example(){
    GM_registerMenuCommand("Convert wifi xml string to qr code", example, "e" );
    // uncoment for debugging 
 //   alert("All systems loaded");
+
 //};
