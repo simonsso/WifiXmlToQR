@@ -35,6 +35,7 @@ function hexstring(rawstring){
 
 function example(){
    var txt="xxx";
+	oQRCode.clear();
    if (window.getSelection) {
       txt = window.getSelection();
    }
@@ -58,11 +59,14 @@ function example(){
    ;
 
    // Datastring is generated here
-   alert(datastring);
+   //alert(datastring);
 
+	oQRCode.makecode(datastring);
+}
+	var datastring="dummy";
    mainDoc = top.document.body;
 	
-   mainDoc.innerHTML = "<div><table border=10><tr><td><div id=testcode></div></td></tr></table></div>" + mainDoc.innerHTML;
+   mainDoc.innerHTML = "<div id=outer_frame><table border=10><tr><td><div id=testcode></div></td></tr></table></div>" + mainDoc.innerHTML;
    imagediv = document.getElementById("testcode");
 	
    if (imagediv){
@@ -75,7 +79,8 @@ function example(){
 	     height : 256,
         correctLevel : QRCode.CorrectLevel.Q
 	})
-}
+   myouter = document.getElementById("outer_frame");
+	myouter.style.position="fixed";
 //Main
 //
    if (typeof window.DOMParser != "undefined") {
