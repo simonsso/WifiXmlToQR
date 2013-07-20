@@ -1,0 +1,4 @@
+Depends on external library:
+
+git submodule add https://github.com/davidshimjs/qrcodejs.git
+
