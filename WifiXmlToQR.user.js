@@ -105,3 +105,4 @@ function WifiXmlToQR(){
    GM_registerMenuCommand("Convert wifi xml string to qr code", WifiXmlToQR, "e" );
    // uncoment for debugging 
    // alert("All systems loaded");
+// }
