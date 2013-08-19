@@ -64,7 +64,11 @@ function WifiXmlToQR(){
 
    // Datastring is generated here
    //alert(datastring);
+   genqr(datastring);
 
+}
+
+function genqr(datastring){
    mainDoc = top.document.body;
    imagediv = document.getElementById("testcode");
 	if(! imagediv){

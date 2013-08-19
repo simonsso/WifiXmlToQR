@@ -1,0 +1,29 @@
+<html><head></head>
+<body>
+        <script type="text/javascript">
+	function GM_registerMenuCommand(dummy0,dummy1,dummy2){
+		// alert("Dummy System load callback");	
+	}
+	</script>
+	<script type="text/javascript" src="qrcodejs/qrcode.js"></script>
+	<script type="text/javascript" src="WifiXmlToQR.user.js"></script>
+
+        <script type="text/javascript">
+	function validateform(){
+               return(false);
+        }
+	
+	function go(){
+		var datastring;
+		datastring=document.forms["inputbox"]["xyz"].value;
+		genqr(datastring);
+	};
+	</script>
+
+       <form action=false name="inputbox" onSubmit="return validateform();">
+            <input name="xyz" size=80 type="text" value="WIFI:S:My Net;T:WPA;P:banana;"/>
+            <input type="button" onclick="go();" value="generate"/>
+        </form>
+	
+</body>
+</html>
