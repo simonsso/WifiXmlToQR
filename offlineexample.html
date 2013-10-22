@@ -16,11 +16,16 @@
 	function go(){
 		var datastring;
 		datastring=document.forms["inputbox"]["xyz"].value;
-		genqr(datastring);
+		genqr(datastring,options);
 	};
+	var options={};
 	</script>
 
        <form action=false name="inputbox" onSubmit="return validateform();">
+       	    X: <input type="number" min=1 size=4 name=x onchange="options.width=parseInt(x.value);">
+       	    Y: <input type="number" min=1 size=4 name=y onchange="options.height=parseInt(y.value);">
+       	    Level: <input type="text" size=4 name=Level onchange="options.Level=Level.value;">
+	    <br/>
             <input name="xyz" size=80 type="text" value="WIFI:S:My Net;T:WPA;P:banana;"/>
             <input type="button" onclick="go();" value="generate"/>
         </form>

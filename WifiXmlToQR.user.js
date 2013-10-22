@@ -8,6 +8,14 @@
 // @version     1
 // ==/UserScript==
 
+//
+// WiFi configuration to QR code tool
+// Dual functionality:
+// Either as grease monkey user script
+//
+// or as stand alone website.
+//
+
 
 function wpa_encoding_type(rawstring){
    //Network types in xml are have other name in wifi object type
@@ -45,10 +53,6 @@ function WifiXmlToQR(){
    var txt2=txt.toString();
    txt=txt2.replace(/""/g,"\"");
 
-   var mytext = document.getElementById("qrdata");
-	if(mytext){
-      mytext.innerHTML="unknown selection";
-	}
    imagediv = document.getElementById("testcode");
 	if(imagediv){
       imagediv.style.visibility = "hidden";
@@ -68,36 +72,39 @@ function WifiXmlToQR(){
 
 }
 
-function genqr(datastring){
+function genqr(datastring,options){
    mainDoc = top.document.body;
-   imagediv = document.getElementById("testcode");
+	options=options || {};
+
+	var width = options.width || 500;
+	var height = options.height || 500;
+
+   var imagediv = document.getElementById("testcode");
+
 	if(! imagediv){
-      mainDoc.innerHTML = "<div id=outer_frame><table border=10><tr><td><div id=testcode></div></td></tr><tr><td id=qrdata></td></tr></table></div>" + mainDoc.innerHTML;
-      imagediv = document.getElementById("testcode");
-      imagediv.style.visibility = "visible";
-	   oQRCode = new QRCode("testcode", {
-	     text : datastring,
-	     width : 256,
-	     height : 256,
-        correctLevel : QRCode.CorrectLevel.Q
-	   })
-      myouter = document.getElementById("outer_frame");
+      mainDoc.innerHTML = "<div id=outer_frame><table id=outertable border=0><tr><td><div id=testcode></div></td></tr><tr><td id=qrdatasubtitle></td></tr></table></div>" + mainDoc.innerHTML;
+
+      var myouter = document.getElementById("outer_frame");
 	   myouter.style.position="fixed";
 	   myouter.style.right=0;
+      myouter = document.getElementById("outertable");
+	   myouter.style.border="30px solid white";
+      imagediv = document.getElementById("testcode");
+      imagediv.style.visibility = "visible";
 	}
-	oQRCode.clear();
-	oQRCode.makeCode(datastring);
+   document.getElementById("testcode").innerHTML="";
+	var oQRCode = new QRCode("testcode", {
+	     text : datastring,
+	     width : width,
+	     height : height,
+        correctLevel : QRCode.CorrectLevel.M
+	})
    imagediv.style.visibility = "visible";
-   mytext = document.getElementById("qrdata");
-	if(mytext){
-		   mytext.innerHTML=datastring;
-	}
 }
 
 
 //Main
 //
-   var oQRCode; 
    if (typeof window.DOMParser != "undefined") {
 	   parseXml = function(xmlStr) {
 		return ( new window.DOMParser() ).parseFromString(xmlStr, "text/xml");
@@ -109,4 +116,5 @@ function genqr(datastring){
    GM_registerMenuCommand("Convert wifi xml string to qr code", WifiXmlToQR, "e" );
    // uncoment for debugging 
    // alert("All systems loaded");
+// vim:ts=3
 // }
