@@ -10,3 +10,11 @@ generaded for the network by selecting the user command from the menu.
 Latest build:
 
 https://buildhive.cloudbees.com/job/simonsso/job/WifiXmlToQR/ws/WifiXmlToQR.zip
+
+
+Geting the Source code:
+
+Download code and dependencies from github with https
+   git clone --recursive https://github.com/simonsso/WifiXmlToQR.git
+or with ssh
+   git clone --recursive git@github.com:simonsso/WifiXmlToQR.git
