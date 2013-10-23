@@ -1,0 +1,43 @@
+<html><head></head>
+<body>
+	<h1>Simple test xml to me card function</h1>
+        <div id=testresults></div>	
+        <script type="text/javascript">
+	function GM_registerMenuCommand(dummy0,dummy1,dummy2){
+		// alert("Dummy System load callback");	
+	}
+	</script>
+	<script type="text/javascript" src="../qrcodejs/qrcode.js"></script>
+	<script type="text/javascript" src="../WifiXmlToQR.user.js"></script>
+
+        <script type="text/javascript">
+	function validateform(){
+               return(false);
+        }
+	
+
+	// test xml to MeCard
+	function test(inputstring,expected){
+		var datastring=WifiXmlToMeCard(inputstring);
+		return(datastring == expected );
+	}
+
+
+	tests=[
+	['<?xml version=""1.0""?><WLANProfile xmlns=""http://www.microsoft.com/networking/WLAN/profile/v1""><name>bahnorama</name><SSIDConfig><SSID><hex>6261686E6F72616D61</hex><name>bahnorama</name></SSID></SSIDConfig><connectionType>ESS</connectionType><connectionMode>auto</connectionMode><MSM><security><authEncryption><authentication>WPAPSK</authentication><encryption>TKIP</encryption><useOneX>false</useOneX></authEncryption><sharedKey><keyType>passPhrase</keyType><protected>false</protected><keyMaterial>bahnorama6001415</keyMaterial></sharedKey></security></MSM></WLANProfile>',"WIFI:S:bahnorama;P:bahnorama6001415;T:WPAPSK;" ],
+	['<?xml version=""1.0""?><WLANProfile xmlns=""http://www.microsoft.com/networking/WLAN/profile/v1""><name>UPC828358</name><SSIDConfig><SSID><hex>555043383238333538</hex><name>UPC828358</name></SSID></SSIDConfig><connectionType>ESS</connectionType><connectionMode>auto</connectionMode><MSM><security><authEncryption><authentication>WPA2PSK</authentication><encryption>AES</encryption><useOneX>false</useOneX></authEncryption><sharedKey><keyType>passPhrase</keyType><protected>false</protected><keyMaterial>qwerty</keyMaterial></sharedKey></security></MSM></WLANProfile>','WIFI:S:UPC828358;P:qwerty;T:WPA;']
+	
+	];
+	var i;
+	var res;
+	for(i=0;i<tests.length;i++){
+		var el=document.getElementById("testresults");
+		res=test(tests[i][0].replace(/""/g,"\""),tests[i][1]);
+		el.innerHTML=el.innerHTML+"Test "+(i+1).toString()+"   "+(res?"PASS":"FAIL")+"<br>";
+
+	
+	}
+	</script>
+
+</body>
+</html>

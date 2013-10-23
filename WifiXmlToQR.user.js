@@ -58,6 +58,14 @@ function WifiXmlToQR(){
       imagediv.style.visibility = "hidden";
 	}
 
+   //alert(datastring);
+	datastring=WifiXmlToMeCard(txt);
+   genqr(datastring);
+
+}
+function WifiXmlToMeCard(txt){
+   // Datastring is generated here
+
    var z=parseXml(txt);
    var aa=z.getElementsByTagName("SSIDConfig")[0];
    var datastring="WIFI:"
@@ -66,10 +74,8 @@ function WifiXmlToQR(){
    +"T:"+wpa_encoding_type(z.getElementsByTagName("security")[0].getElementsByTagName("authentication")[0].textContent)+";"
    ;
 
-   // Datastring is generated here
-   //alert(datastring);
-   genqr(datastring);
 
+	return datastring;
 }
 
 function genqr(datastring,options){
