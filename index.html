@@ -26,6 +26,28 @@
   </head>
 
   <body>
+        <script type="text/javascript">
+	function GM_registerMenuCommand(dummy0,dummy1,dummy2){
+		// alert("Dummy System load callback");	
+	}
+	</script>
+	<script type="text/javascript" src="qrcodejs/qrcode.js"></script>
+	<script type="text/javascript" src="WifiXmlToQR.user.js"></script>
+
+        <script type="text/javascript">
+	function validateform(){
+               return(false);
+        }
+	
+	function go(){
+		var datastring;
+		datastring=document.forms["inputbox"]["xyz"].value;
+		genqr(datastring,options);
+	};
+	var options={};
+	</script>
+
+    
     <div id="container">
       <div class="inner">
 
@@ -51,6 +73,14 @@ generaded for the network by selecting the user command from the menu.</p>
 
 <p>Log in to last pass and export your password [https://lastpass.com/export.php?&amp;hp=0] then find the network you like to export mark the corsponding xml structure and run wifi to xml in greasemonkey user script menu.</p>
 
+<form action=false name="inputbox" onSubmit="return validateform();">
+       	    Width: <input type="number" min=1 size=4 name=x onchange="options.width=parseInt(x.value);">
+       	    Height: <input type="number" min=1 size=4 name=y onchange="options.height=parseInt(y.value);">
+       	    
+	    <br/>
+            <input name="xyz" size=80 type="text" value="WIFI:S:My Net;T:WPA;P:banana;"/>
+            <input type="button" onclick="go();" value="generate"/>
+</form>
 <p><a href="http://simonsso.github.io/WifiXmlToQR/offlineexample.html">offline example</a></p>
 
 <p>Geting the Source code:</p>
@@ -71,35 +101,5 @@ or with ssh
 
       </div>
     </div>
-        <script type="text/javascript">
-	function GM_registerMenuCommand(dummy0,dummy1,dummy2){
-		// alert("Dummy System load callback");	
-	}
-	</script>
-	<script type="text/javascript" src="qrcodejs/qrcode.js"></script>
-	<script type="text/javascript" src="WifiXmlToQR.user.js"></script>
-
-        <script type="text/javascript">
-	function validateform(){
-               return(false);
-        }
-	
-	function go(){
-		var datastring;
-		datastring=document.forms["inputbox"]["xyz"].value;
-		genqr(datastring,options);
-	};
-	var options={};
-	</script>
-
-       <form action=false name="inputbox" onSubmit="return validateform();">
-       	    Width: <input type="number" min=1 size=4 name=x onchange="options.width=parseInt(x.value);">
-       	    Height: <input type="number" min=1 size=4 name=y onchange="options.height=parseInt(y.value);">
-       	    
-	    <br/>
-            <input name="xyz" size=80 type="text" value="WIFI:S:My Net;T:WPA;P:banana;"/>
-            <input type="button" onclick="go();" value="generate"/>
-</form>
-    
 </body>
 </html>
