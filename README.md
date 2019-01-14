@@ -9,14 +9,10 @@ generaded for the network by selecting the user command from the menu.
 
 Usage:
 
-Log in to last pass and export your password https://lastpass.com/export.php?&hp=0 then find the network you like to export mark the corsponding xml structure and run wifi to xml in greasemonkey user script menu.
+Log in to last pass and export your password [https://lastpass.com/export.php?&hp=0] then find the network you like to export mark the corsponding xml structure and run wifi to xml in greasemonkey user script menu.
 
 
-Latest build at buildhive:
-
-https://buildhive.cloudbees.com/job/simonsso/job/WifiXmlToQR/ws/WifiXmlToQR.zip
-Workspace https://buildhive.cloudbees.com/job/simonsso/job/WifiXmlToQR/ws/
-
+[offline example](http://simonsso.github.io/WifiXmlToQR/offlineexample.html)
 
 
 Geting the Source code:
