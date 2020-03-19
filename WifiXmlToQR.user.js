@@ -94,7 +94,7 @@ function genqr(datastring,options){
 	   myouter.style.position="fixed";
 	   myouter.style.right=0;
       myouter = document.getElementById("outertable");
-	   myouter.style.border="30px solid white";
+	   myouter.style.border="80px solid white";
       imagediv = document.getElementById("testcode");
       imagediv.style.visibility = "visible";
 	}
